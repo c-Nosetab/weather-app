@@ -1,0 +1,32 @@
+<h1>Weather Report</h1>
+
+
+<div id="weather">
+
+  <div id="weatherForm">
+    <input type="text" v-model="zipcode" placeholder="Zipcode"> <button v-on:click='searchZipcode' class="btn btn-primary">Submit</button>
+  </div>
+
+  <button v-on:click="showCache">What is Cached?</button>
+
+  <br>
+
+  <div>
+    <span v-if="weatherReport.length > 0">
+    <!-- <h1>Weather for {{location}}</h1> -->
+      <div class="row">
+        <div v-for="day in weatherReport" class="col-lg-3 thumbnail day-report">
+          <h2>{{day.date.weekday_short}}, {{day.date.monthname_short}} {{day.date.day}}</h2>
+          <ul>
+            <img :src="day.icon_url" :alt="day.icon">
+            <li>{{day.conditions}}</li>
+            <li>High: {{day.high.fahrenheit}} | Low: {{day.low.fahrenheit}}</li>
+          </ul>
+        </div>
+      </div>
+    </span>
+    <span v-else> Please enter your zipcode for weather information.</span>
+  </div>
+
+
+</div>
