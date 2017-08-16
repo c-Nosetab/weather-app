@@ -4,28 +4,55 @@
 <div id="weather">
 
   <div id="weatherForm">
-    <input type="text" v-model="zipcode" placeholder="Zipcode"> <button v-on:click='searchZipcode' class="btn btn-primary">Submit</button>
+    <input type="text" v-model="zipcode" placeholder="Zipcode"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
   </div>
-
-  <button v-on:click="showCache">What is Cached?</button>
 
   <br>
 
-  <div>
-    <span v-if="weatherReport.length > 0">
-    <!-- <h1>Weather for {{location}}</h1> -->
-      <div class="row">
-        <div v-for="day in weatherReport" class="col-lg-3 thumbnail day-report">
-          <h2>{{day.date.weekday_short}}, {{day.date.monthname_short}} {{day.date.day}}</h2>
-          <ul>
-            <img :src="day.icon_url" :alt="day.icon">
-            <li>{{day.conditions}}</li>
-            <li>High: {{day.high.fahrenheit}} | Low: {{day.low.fahrenheit}}</li>
-          </ul>
+  <ul v-if="errors.length > 0 ">
+    <li v-for="error in errors">{{error}}</li>
+  </ul>
+
+  <span v-if="loading == true">
+    <div class='container'>
+      <div class="loader col-lg-12"></div>
+    </div>
+  </span>
+
+    <span v-else-if="weatherReport.length > 0">
+      <div class='container'>
+        <div class='row weather-container'>
+          <div v-for="day in weatherReport" class="thumbnail day-report col-sm-3 col-xs-12">
+            <div class="day-header">
+              <h2>{{day.date.weekday_short}}, {{day.date.monthname_short}} {{day.date.day}}</h2>
+            </div>
+
+            <div class="day-img">
+              <span><img :src="day.icon_url" :alt="day.icon"></span>
+            </div>
+            <div class="day-info">
+
+              <p class="condition">
+                <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
+                <span v-else>{{day.conditions}}</span>
+              </p>
+              <p class="high-temp">{{day.high.fahrenheit}}°F</p>
+              <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+            </div>
+          </div>
         </div>
       </div>
     </span>
-    <span v-else> Please enter your zipcode for weather information.</span>
+    <span v-else-if="errors.length > 0 && weatherReport.length == 0">
+      <div class='container'>
+        <p>Something went wrong. Please see message above for details.</p>
+      </div>
+    </span>
+    <span v-else>
+      <div class='container'>
+        <p>Please enter your zipcode for weather information.</p>
+      </div>
+    </span>
   </div>
 
 
