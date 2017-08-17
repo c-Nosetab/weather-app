@@ -1,61 +1,92 @@
 
 <div id='main'>
   <div id="weather">
-    <h1>Weather Report</h1>
-
-    <ul v-if="errors.length > 0 " class="thumbnail errors">
-      <li v-for="error in errors">- {{error}}</li>
-    </ul>
-
-    <div id="weatherForm">
-      <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
+    <div class="header">
+      <h1>Weather Report</h1>
     </div>
 
-    <br>
+    <div class="main-container">
 
 
-    <span v-if="loading == true">
-      <div class='container'>
-        <div class="loader"></div>
+
+
+      <br>
+
+      <div id="weatherForm">
+        <h4>
+          Enter a zipcode to see the forecast:
+
+          <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())" maxlength="5"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
+
+        </h4>
       </div>
-    </span>
 
-      <span v-else-if="weatherReport.length > 0">
+      <ul v-if="errors.length > 0 " class="thumbnail errors">
+        <li v-for="error in errors">- {{error}}</li>
+      </ul>
+
+
+
+      <span v-if="loading == true">
+        <br>
         <div class='container'>
-          <div class='row weather-container'>
-            <div v-for="day in weatherReport" class="thumbnail day-report">
-              <div class="day-header">
-                <h2><span>{{day.date.weekday_short}}<!-- , {{day.date.monthname_short}} {{day.date.day}} --></span></h2>
-              </div>
+          <div class="loader"></div>
+        </div>
+      </span>
 
-              <div class="day-img">
-                <span><img :src="day.icon_url" :alt="day.icon"></span>
-              </div>
-              <div class="day-info">
+        <span v-else-if="weatherReport.length > 0">
+        <h2>
+          Upcoming Forecast for {{currentCity}}:
+        </h2>
+        <br>
+          <div class='container'>
+            <div class='row weather-container'>
+              <div v-for="day in weatherReport" class="thumbnail day-report">
+                <div class="day-header">
+                  <h2><span>{{day.date.weekday_short}}</span></h2>
+                </div>
 
-                <p class="condition">
-                  <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
-                  <span v-else>{{day.conditions}}</span>
-                </p>
-                <p class="high-temp">{{day.high.fahrenheit}}°F</p>
-                <hr>
-                <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+                <div class="day-img">
+                  <span><img :src="day.icon_url" :alt="day.icon"></span>
+                </div>
+                <div class="day-info">
+
+                  <p class="condition">
+                    <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
+                    <span v-else>{{day.conditions}}</span>
+                  </p>
+                  <p class="high-temp">{{day.high.fahrenheit}}°F</p>
+                  <hr>
+                  <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </span>
-      <span v-else-if="errors.length > 0 && weatherReport.length == 0">
-        <div class='container well'>
-          <p>Something went wrong. Please see message above for details.</p>
-        </div>
-      </span>
-      <span v-else>
-        <div class='container well'>
-          <p>Please enter your zipcode for weather information.</p>
-        </div>
-      </span>
+        </span>
+      </div>
+
     </div>
+
+    <div class="footer">
+      <div class='row footer-content'>
+        <div id='wunder-content' class="col-xs-4">
+          <p>Weather provided to you by Wunderground</p>
+          <a href="https://www.wunderground.com/" target="_blank"><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt=""></a>
+        </div>
+        <div id='bateson-content' class='col-xs-4'>
+          <p>Made by Christopher Bateson</p>
+          <a href="http://i.imgur.com/5yLi0KH.png" target="_blank"><img src="/assets/bateson-round.jpg" alt=""></a>
+        </div>
+      </div>
+
+      <br>
+
+      <div id='copyright'>
+        <p>©Copyright 2017. All Rights Reserved</p>
+      </div>
+
+    </div>
+
 
 
   </div>

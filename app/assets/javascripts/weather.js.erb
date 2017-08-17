@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     el: '#weather',
     data: {
       zipcode: '',
-      location: '',
+      currentCity: 'Chicago',
+
+
       weatherReport: [],
 
       lastSearch: 0,
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         } else {
           this.errors = [];
           this.searchZipcode()
+          this.findCity
         };
       },
 
@@ -47,31 +50,46 @@ document.addEventListener('DOMContentLoaded', function(event) {
           } else {
             $.get('http://api.wunderground.com/api/624c587a66ec60af/forecast/q/' + this.zipcode +'.json', function(list) {
 
-
               if (list['forecast']) {
-                this.store(this.zipcode, list['forecast']['simpleforecast']['forecastday']);
                 for (var i = 0; i < 3; i++) {
                   this.weatherReport.push(list['forecast']['simpleforecast']['forecastday'][i]);
+                  this.findCity()
                 };
               } else if (list['response']){
-                this.errors = ['Zipcode must be 5 numbers. IE: 60622', list['response']['error']['description']]
-              };
+                this.errors = [list['response']['error']['description']]
+                this.loading = false;
 
-              this.zipcode = '';
-              this.loading = false;
+              };
 
             }.bind(this))
           }
         }
       },
 
-      store: function(zipcode, weather) {
+      findCity: function() {
+        $.get('http://api.wunderground.com/api/624c587a66ec60af/conditions/q/' + this.zipcode +'.json', function(info) {
+
+          if (info['current_observation']) {
+            this.currentCity = info['current_observation']['display_location']['full'];
+            this.store(this.zipcode, this.weatherReport, this.currentCity);
+
+          } else {
+            this.errors.push('There was an issue retrieving the city name. Please try again');
+          }
+        }.bind(this));
+      },
+
+      store: function(zipcode, weather, city) {
+
         object = {
           timestamp: Date.now(),
-          weather: weather
+          city: city,
+          weather: weather,
         };
 
         localStorage[zipcode] = JSON.stringify(object);
+        this.loading = false;
+        this.zipcode = '';
       },
 
       fetch: function(zipcode) {
@@ -80,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         if(object) {
           if (JSON.parse(object).timestamp + 3600000 > Date.now()) {
+            this.currentCity = JSON.parse(object).city
             return JSON.parse(object).weather;
           } else {
             localStorage.removeItem(zipcode);
