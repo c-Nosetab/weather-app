@@ -39,6 +39,8 @@
           Upcoming Forecast for {{currentCity}}:
         </h2>
         <br>
+        <input type="checkbox" v-on:change="celsius = !celsius"> Celsius? </input>
+
           <div class='container'>
             <div class='row weather-container'>
               <div v-for="day in weatherReport" class="thumbnail day-report">
@@ -55,9 +57,28 @@
                     <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
                     <span v-else>{{day.conditions}}</span>
                   </p>
-                  <p class="high-temp">{{day.high.fahrenheit}}°F</p>
-                  <hr>
-                  <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+
+                  <div v-if="celsius == true">
+                    <p class="high-temp">
+                      <span>{{day.high.celsius}}°C</span>
+                    </p>
+                    <hr>
+                    <p class="low-temp">
+                      <span>{{day.low.celsius}}°C</span>
+                    </p>
+                  </div>
+                  <div v-else>
+                    <p class="high-temp">
+                      <span>{{day.high.fahrenheit}}°F</span>
+                    </p>
+                    <hr>
+                    <p class="low-temp">
+                      <span>{{day.low.fahrenheit}}°F</span>
+                    </p>
+                  </div>
+
+
+
                 </div>
               </div>
             </div>
