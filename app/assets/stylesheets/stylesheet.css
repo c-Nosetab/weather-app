@@ -2,8 +2,18 @@
   /*border: 1px solid red;*/
 }
 
-body {
+
+body:after {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
   background: url('cloud_background.jpg');
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  z-index: -1;
 }
 
 .content {
@@ -12,8 +22,38 @@ body {
 }
 
 .container {
-  width:90%;
+  width:80%;
 }
+
+.container p {
+  text-align: center;
+  font-size: 25px;
+}
+
+
+
+h1 {
+  text-decoration: underline black;
+  color: white;
+  font-size: 70px;
+  white-space: nowrap;
+  -webkit-text-stroke: 2px black;
+}
+
+
+.errors {
+  color: red;
+  list-style: none;
+  text-align: left;
+  line-height: 25px;
+
+  width: 300px;
+
+  background: white;
+}
+
+
+/* BEGIN WEATHER CONTAINER STYLING */
 
 .weather-container {
   text-align: center;
@@ -25,20 +65,27 @@ body {
 
 .day-report {
   background: linear-gradient(to bottom right, #030416, #1513B8);
-  border-radius: 5px;
+  min-width: 200px;
+  border-radius: 10px;
 }
 
 .day-report .day-header {
   background: white;
-  border-bottom: 4px solid red;
+  border-bottom: 8px solid red;
   border-radius: 5px 5px 0 0;
   padding-top: 0;
   margin-top: -20px;
 }
 
-/*.day-header h2 {
+.day-header h2 {
+  line-height: 50px;
+  font-size: 40px;
+
+  height: 50px;
   vertical-align: bottom;
-}*/
+  font-weight: bold;
+  vertical-align: bottom;
+}
 
 .day-report .day-img {
   height: 200px;
@@ -55,14 +102,17 @@ body {
   width: auto;
 }
 
-
-
 .day-info p {
   color: white;
 }
 
+.day-info hr {
+  width: 30%;
+  padding: -10px;
+}
+
 p.condition {
-  font-size: 20px;
+  font-size: 16px;
   height: 40px;
   line-height: 40px;
 }
@@ -73,12 +123,8 @@ p.condition span {
   line-height: normal;
 }
 
-span.small {
-  font-size: 20px;
-}
-
 p.high-temp {
-  width: 90%;
+  width: 75%;
   margin: 0 auto;
 
   text-align: left;
@@ -87,8 +133,10 @@ p.high-temp {
 }
 
 p.low-temp {
-  width: 90%;
-  margin-top: -20px;
+  width: 75%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+
 
   color: #78d5fc;
   text-align: right;
@@ -96,10 +144,17 @@ p.low-temp {
   font-size: 40px;
 }
 
+/* END WEATHER CONTAINER STYLING */
 
+
+
+
+
+
+
+/* BEGIN LOADER STYLING */
 
 .loader {
-  align-self: middle;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
@@ -108,7 +163,8 @@ p.low-temp {
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 
-  /*margin-right: 200px;*/
+  margin: auto;
+
 
 }
 
@@ -120,4 +176,42 @@ p.low-temp {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* END LOADER STYLING */
+
+@media screen and (max-width: 680px ) {
+
+  .weather-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .day-report {
+    width: 300px;
+
+  }
+
+  p.condition {
+    font-size: 27px;
+  }
+
 }

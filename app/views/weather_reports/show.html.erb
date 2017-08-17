@@ -1,59 +1,62 @@
-<h1>Weather Report</h1>
 
+<div id='main'>
+  <div id="weather">
+    <h1>Weather Report</h1>
 
-<div id="weather">
+    <ul v-if="errors.length > 0 " class="thumbnail errors">
+      <li v-for="error in errors">- {{error}}</li>
+    </ul>
 
-  <div id="weatherForm">
-    <input type="text" v-model="zipcode" placeholder="Zipcode"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
-  </div>
-
-  <br>
-
-  <ul v-if="errors.length > 0 ">
-    <li v-for="error in errors">{{error}}</li>
-  </ul>
-
-  <span v-if="loading == true">
-    <div class='container'>
-      <div class="loader col-lg-12"></div>
+    <div id="weatherForm">
+      <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
     </div>
-  </span>
 
-    <span v-else-if="weatherReport.length > 0">
+    <br>
+
+
+    <span v-if="loading == true">
       <div class='container'>
-        <div class='row weather-container'>
-          <div v-for="day in weatherReport" class="thumbnail day-report col-sm-3 col-xs-12">
-            <div class="day-header">
-              <h2>{{day.date.weekday_short}}, {{day.date.monthname_short}} {{day.date.day}}</h2>
-            </div>
+        <div class="loader"></div>
+      </div>
+    </span>
 
-            <div class="day-img">
-              <span><img :src="day.icon_url" :alt="day.icon"></span>
-            </div>
-            <div class="day-info">
+      <span v-else-if="weatherReport.length > 0">
+        <div class='container'>
+          <div class='row weather-container'>
+            <div v-for="day in weatherReport" class="thumbnail day-report">
+              <div class="day-header">
+                <h2><span>{{day.date.weekday_short}}<!-- , {{day.date.monthname_short}} {{day.date.day}} --></span></h2>
+              </div>
 
-              <p class="condition">
-                <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
-                <span v-else>{{day.conditions}}</span>
-              </p>
-              <p class="high-temp">{{day.high.fahrenheit}}°F</p>
-              <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+              <div class="day-img">
+                <span><img :src="day.icon_url" :alt="day.icon"></span>
+              </div>
+              <div class="day-info">
+
+                <p class="condition">
+                  <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
+                  <span v-else>{{day.conditions}}</span>
+                </p>
+                <p class="high-temp">{{day.high.fahrenheit}}°F</p>
+                <hr>
+                <p class="low-temp">{{day.low.fahrenheit}}°F</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </span>
-    <span v-else-if="errors.length > 0 && weatherReport.length == 0">
-      <div class='container'>
-        <p>Something went wrong. Please see message above for details.</p>
-      </div>
-    </span>
-    <span v-else>
-      <div class='container'>
-        <p>Please enter your zipcode for weather information.</p>
-      </div>
-    </span>
+      </span>
+      <span v-else-if="errors.length > 0 && weatherReport.length == 0">
+        <div class='container well'>
+          <p>Something went wrong. Please see message above for details.</p>
+        </div>
+      </span>
+      <span v-else>
+        <div class='container well'>
+          <p>Please enter your zipcode for weather information.</p>
+        </div>
+      </span>
+    </div>
+
+
   </div>
-
-
 </div>

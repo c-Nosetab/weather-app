@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
           } else {
             $.get('http://api.wunderground.com/api/624c587a66ec60af/forecast/q/' + this.zipcode +'.json', function(list) {
 
+
               if (list['forecast']) {
                 this.store(this.zipcode, list['forecast']['simpleforecast']['forecastday']);
                 for (var i = 0; i < 3; i++) {
@@ -90,7 +91,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
       }
     },
 
-
+    mounted: function() {
+      console.log( <%= Rails.application.secrets.wunderground_key %> )
+    }
 
   });
 })
