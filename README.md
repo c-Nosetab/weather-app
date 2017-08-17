@@ -25,4 +25,4 @@
 
 After that, the website itself should lead you through the entire process.
 
-### Thank you for checking out Weather Report
+### Thank you for checking out Weather Report!
