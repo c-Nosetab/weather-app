@@ -1,1 +1,1 @@
-Vue.development_mode = true
+Vue.development_mode = false
