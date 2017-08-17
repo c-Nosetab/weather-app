@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
       cache: {},
       errors: []
 
-
     },
 
     methods: {
@@ -32,15 +31,17 @@ document.addEventListener('DOMContentLoaded', function(event) {
       tooLong: function() {
         this.loading = false;
         this.errors.push('Your request timed out. Please try again.');
-        // asdf;
+        // The below code does nothing. It only causes JS to stop.
+        asdf;
       },
 
       searchZipcode: function() {
         this.errors = ['Zipcode cannot be blank.', 'Zipcode must be 5 numbers. IE: 60622' ]
 
         if (this.zipcode != '') {
-          this.weatherReport = [];
+          console.log('made it past zipcode check')
           this.loading = true;
+          this.weatherReport = [];
           this.errors = []
           this.lastSearch = Date.now()
 
@@ -68,12 +69,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
               } else if (list['response']){
                 this.errors = [list['response']['error']['description']]
                 this.loading = false;
+                this.zipcode = '';
                 clearTimeout(timer);
               };
 
             }.bind(this))
 
-          this.loading = false;
 
           }
         }
@@ -85,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
           if (info['current_observation']) {
             this.currentCity = info['current_observation']['display_location']['full'];
             this.store(this.zipcode, this.weatherReport, this.currentCity);
-
           } else {
             this.errors.push('There was an issue retrieving the city name. Please try again');
           }
@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         if(object) {
           if (JSON.parse(object).timestamp + 3600000 > Date.now()) {
             this.currentCity = JSON.parse(object).city
+            // this.weatherReport = [];
             return JSON.parse(object).weather;
           } else {
             localStorage.removeItem(zipcode);

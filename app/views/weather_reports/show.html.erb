@@ -2,20 +2,13 @@
 <div id='main'>
   <div id="weather">
     <div class="header">
-      <h1>Weather Report</h1>
+      <h1>Weather Rep<span id='sun'>☀</span>rt</h1>
     </div>
 
     <div class="main-container">
-
-
-
-
-      <br>
-
       <div id="weatherForm">
         <h4>
-          Enter a zipcode to see the forecast:
-
+          Enter zipcode to see forecast:
           <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())" maxlength="5"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
 
         </h4>
@@ -25,8 +18,6 @@
         <li v-for="error in errors">- {{error}}</li>
       </ul>
 
-
-
       <span v-if="loading == true">
         <br>
         <div class='container'>
@@ -35,15 +26,13 @@
       </span>
 
         <span v-else-if="weatherReport.length > 0">
-        <h2>
-          Upcoming Forecast for {{currentCity}}:
-        </h2>
-        <br>
-        <input type="checkbox" v-on:change="celsius = !celsius"> Celsius? </input>
-
+          <h2>Upcoming Forecast for {{currentCity}}:</h2>
+          <br>
+          <input type="checkbox" v-model="celsius"> Celsius? </input>
           <div class='container'>
             <div class='row weather-container'>
               <div v-for="day in weatherReport" class="thumbnail day-report">
+
                 <div class="day-header">
                   <h2><span>{{day.date.weekday_short}}</span></h2>
                 </div>
@@ -51,8 +40,8 @@
                 <div class="day-img">
                   <span><img :src="day.icon_url" :alt="day.icon"></span>
                 </div>
-                <div class="day-info">
 
+                <div class="day-info">
                   <p class="condition">
                     <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
                     <span v-else>{{day.conditions}}</span>
@@ -76,14 +65,20 @@
                       <span>{{day.low.fahrenheit}}°F</span>
                     </p>
                   </div>
-
-
-
                 </div>
               </div>
             </div>
           </div>
         </span>
+
+        <span v-else-if="errors.length > 0" class="initial-info thumbnail">
+          <h5>Something went wrong. Please see above errors for details.</h5>
+        </span>
+
+        <span v-else class="initial-info thumbnail">
+          <h5>Welcome to Weather Report, a place for your current weather needs! Once you enter a zipcode above you'll be shown the weather for the next three days for that area! Please note that a zipcode must be 5 digits, ie. 60622. Thanks and have fun!</h5>
+        </span>
+
       </div>
 
     </div>
@@ -91,7 +86,7 @@
     <div class="footer">
       <div class='row footer-content'>
         <div id='wunder-content' class="col-xs-4">
-          <p>Weather provided to you by Wunderground</p>
+          <p>Weather provided to you by</p>
           <a href="https://www.wunderground.com/" target="_blank"><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt=""></a>
         </div>
         <div id='bateson-content' class='col-xs-4'>
@@ -105,10 +100,6 @@
       <div id='copyright'>
         <p>©Copyright 2017. All Rights Reserved</p>
       </div>
-
     </div>
-
-
-
   </div>
 </div>
