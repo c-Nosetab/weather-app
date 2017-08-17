@@ -28,7 +28,7 @@
         <span v-else-if="weatherReport.length > 0">
           <h2>Upcoming Forecast for {{currentCity}}:</h2>
           <br>
-          <input type="checkbox" v-on:change="celsius = !celsius"> Celsius? </input>
+          <input type="checkbox" v-model="celsius"> Celsius? </input>
           <div class='container'>
             <div class='row weather-container'>
               <div v-for="day in weatherReport" class="thumbnail day-report">
@@ -76,7 +76,7 @@
         </span>
 
         <span v-else class="initial-info thumbnail">
-          <h5>Welcome to Weather Report, a place for your current weather needs! Once you enter a zipcode above, you'll be shown the weather for the next three days for that area! Please note that a zipcode must be 5 digits, ie. 60622. Thank you for joining us today!</h5>
+          <h5>Welcome to Weather Report, a place for your current weather needs! Once you enter a zipcode above you'll be shown the weather for the next three days for that area! Please note that a zipcode must be 5 digits, ie. 60622. Thank you for joining us today!</h5>
         </span>
 
       </div>

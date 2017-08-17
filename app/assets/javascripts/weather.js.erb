@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         if (this.zipcode != '') {
           console.log('made it past zipcode check')
-          this.weatherReport = [];
           this.loading = true;
+          this.weatherReport = [];
           this.errors = []
           this.lastSearch = Date.now()
 
@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         if(object) {
           if (JSON.parse(object).timestamp + 3600000 > Date.now()) {
             this.currentCity = JSON.parse(object).city
+            // this.weatherReport = [];
             return JSON.parse(object).weather;
           } else {
             localStorage.removeItem(zipcode);
