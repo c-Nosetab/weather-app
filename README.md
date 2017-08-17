@@ -1,24 +1,28 @@
-# README
+# Using Weather Report
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### If you do not have Rails or Ruby installed on your computer, do the following:
+  * Check out https://www.ruby-lang.org/en/documentation/installation/ for instructions on how to install ruby
+  * Check out http://installrails.com/ for instructions on how to install rails
+    * I would recommend using rbenv for both if you use a Mac or Ubuntu
 
-Things you may want to cover:
+ ## Once completed follow the steps below
 
-* Ruby version
+### If you have the ability to use git:
+  * Click on the Clone or Download button (the big green one) and click on the clipboard.
+  * Open terminal and navigate to the desired directory and put 'git clone <clone link here>' without the quotes.
+  * Using terminal again - cd into weather_challenge_app
+  * Enter 'make server' into the terminal, again without quotes.
+  * Open Chrome, Firefox, or any other browser and navigates to 'localhost:3000'
 
-* System dependencies
 
-* Configuration
+###  If you do not have git:
+  * Click on the Clone or download button above and click on download.
+  * Unzip the folder into the desired location and open terminal.
+  * Open terminal and navigate to the root of the project
+  * Enter 'make server' into the terminal without quotes
+  * Open Chrome, Firefox, or any other browser and navigates to 'localhost:3000'
 
-* Database creation
 
-* Database initialization
+After that, the website itself should lead you through the entire process.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Thank you for checking out Weather Report

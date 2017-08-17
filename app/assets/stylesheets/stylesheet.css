@@ -68,10 +68,6 @@ body:after {
 
 /* BEGIN WEATHER CONTAINER STYLING */
 
-.weather-form h4 {
-  text-align: center;
-}
-
 
 .errors {
   background-color: #d13838 !important;
