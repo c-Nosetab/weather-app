@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
     methods: {
 
       isNumber: function(event) {
-        this.errors = []
+        this.errors = [];
 
         if (this.zipcode.length < 5) {
           if (window.event.key.match(/[A-Za-z;:'",<.>//\[\]\{\}?!@#$%^&*\(\-_=+\`\\\|~)" "]/)) {
             this.errors.push('You may only input numbers.')
             event.preventDefault();;
-          }
-        }
+          };
+        };
 
       },
 
@@ -72,16 +72,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       searchZipcode: function() {
-        this.errors = ['Zipcode cannot be blank.', 'Zipcode must be 5 numbers. IE: 60622' ]
+        this.errors = ['Zipcode cannot be blank.', 'Zipcode must be 5 numbers. IE: 60622' ];
 
         if (this.zipcode != '') {
           this.loading = true;
           this.weatherReport = [];
-          this.errors = []
-          this.lastSearch = Date.now()
+          this.errors = [];
+          this.lastSearch = Date.now();
 
           if (this.fetch(this.zipcode)) {
-            var weatherInfo = this.fetch(this.zipcode)
+            var weatherInfo = this.fetch(this.zipcode);
 
             for (var i = 0; i < 3; i++) {
               this.weatherReport.push(weatherInfo[i]);
@@ -99,22 +99,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
               if (list['forecast']) {
                 for (var i = 0; i < 3; i++) {
                   this.weatherReport.push(list['forecast']['simpleforecast']['forecastday'][i]);
-                  this.findCity()
+                  this.findCity();
                   clearTimeout(timer);
                 };
-              } else if (list['response']){
-                this.errors = [list['response']['error']['description']]
+              } else if (list['response']) {
+                this.errors = [list['response']['error']['description']];
                 this.loading = false;
                 this.key = '';
                 this.zipcode = '';
                 clearTimeout(timer);
               };
 
-            }.bind(this))
-
-
-          }
-        }
+            }.bind(this));
+          };
+        };
       },
 
       findCity: function() {
@@ -144,12 +142,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       fetch: function(zipcode) {
-        var object = localStorage[zipcode]
+        var object = localStorage[zipcode];
 
 
         if(object) {
           if (JSON.parse(object).timestamp + 3600000 > Date.now()) {
-            this.currentCity = JSON.parse(object).city
+            this.currentCity = JSON.parse(object).city;
             // this.weatherReport = [];
             return JSON.parse(object).weather;
           } else {
