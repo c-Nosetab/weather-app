@@ -10,7 +10,7 @@
 ### If you have the ability to use git:
   * Click on the Clone or Download button (the big green one) and click on the clipboard.
   * Open terminal and navigate to the desired directory and put 'git clone <clone link here>' without the quotes.
-  * Using terminal again - cd into weather_challenge_app
+  * Using terminal again - cd into weather_app
   * Enter 'make server' into the terminal, again without quotes.
   * Open Chrome, Firefox, or any other browser and navigates to 'localhost:3000'
 
