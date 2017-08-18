@@ -128,13 +128,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       store: function(zipcode, weather, city) {
-
         object = {
           timestamp: Date.now(),
           city: city,
           weather: weather,
         };
-
         localStorage[zipcode] = JSON.stringify(object);
         this.loading = false;
         this.key = '';
@@ -143,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
       fetch: function(zipcode) {
         var object = localStorage[zipcode];
-
 
         if(object) {
           if (JSON.parse(object).timestamp + 3600000 > Date.now()) {
@@ -158,6 +155,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
           return null;
         };
       }
-    },
+    }
   });
 })
