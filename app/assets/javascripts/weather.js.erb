@@ -3,43 +3,78 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     el: '#weather',
     data: {
-      zipcode: '',
-      currentCity: 'Chicago',
       celsius: false,
-
-      weatherReport: [],
-
+      currentCity: 'Chicago',
+      errors: [],
+      key: '',
       lastSearch: 0,
       loading: false,
-      cache: {},
-      errors: []
+      zipcode: '',
+
+
+      weatherReport: []
 
     },
 
     methods: {
+
+      isNumber: function(event) {
+        this.errors = []
+
+        if (this.zipcode.length < 5) {
+          if (window.event.key.match(/[A-Za-z;:'",<.>//\[\]\{\}?!@#$%^&*\(\-_=+\`\\\|~)" "]/)) {
+            this.errors.push('You may only input numbers.')
+            event.preventDefault();;
+          }
+        }
+
+      },
 
       tooFast: function(now) {
         if (this.lastSearch + 2000 > now) {
           this.errors = ['You\'re requesting too often! Wait at least 2 seconds'];
         } else {
           this.errors = [];
-          this.searchZipcode()
-          this.findCity
+
+          this.getKey();
         };
       },
 
       tooLong: function() {
         this.loading = false;
+        this.key = '';
         this.errors.push('Your request timed out. Please try again.');
         // The below code does nothing. It only causes JS to stop.
         asdf;
+      },
+
+      getKey: function() {
+        // This function is essentially hiding the real key. If quickly
+        // finds the key before moving on.
+        var string = '735b698a77db71ae';
+        var key_string = '';
+
+        for (var i = 0; i < string.split('').length; i++) {
+          if (string.split('')[i].match(/[A-Za-z]/)) {
+            if (string.split('')[i] === 'a') {
+              key_string += 'a';
+            } else {
+              var c = string.split('')[i].charCodeAt(0) + 1;
+              key_string += String.fromCharCode(c);
+            };
+          } else {
+            key_string += (string.split('')[i] - 1)
+          };
+        }
+        this.key = key_string;
+        this.searchZipcode();
+        this.findCity;
       },
 
       searchZipcode: function() {
         this.errors = ['Zipcode cannot be blank.', 'Zipcode must be 5 numbers. IE: 60622' ]
 
         if (this.zipcode != '') {
-          console.log('made it past zipcode check')
           this.loading = true;
           this.weatherReport = [];
           this.errors = []
@@ -54,11 +89,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
             this.zipcode = '';
             this.loading = false;
+            this.key = '';
           } else {
 
             var timer = setTimeout(this.tooLong, 5000);
 
-            $.get('http://api.wunderground.com/api/624c587a66ec60af/forecast/q/' + this.zipcode +'.json', function(list) {
+            $.get('http://api.wunderground.com/api/' + this.key + '/forecast/q/' + this.zipcode +'.json', function(list) {
 
               if (list['forecast']) {
                 for (var i = 0; i < 3; i++) {
@@ -69,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
               } else if (list['response']){
                 this.errors = [list['response']['error']['description']]
                 this.loading = false;
+                this.key = '';
                 this.zipcode = '';
                 clearTimeout(timer);
               };
@@ -81,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       findCity: function() {
-        $.get('http://api.wunderground.com/api/624c587a66ec60af/conditions/q/' + this.zipcode +'.json', function(info) {
+        $.get('http://api.wunderground.com/api/' + this.key + '/conditions/q/' + this.zipcode +'.json', function(info) {
 
           if (info['current_observation']) {
             this.currentCity = info['current_observation']['display_location']['full'];
@@ -102,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         localStorage[zipcode] = JSON.stringify(object);
         this.loading = false;
+        this.key = '';
         this.zipcode = '';
       },
 
@@ -123,10 +161,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
         };
       }
     },
-
-    mounted: function() {
-      console.log( <%= Rails.application.secrets.wunderground_key %> )
-    }
-
   });
 })

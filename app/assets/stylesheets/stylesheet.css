@@ -78,6 +78,17 @@ body:after {
   width: 350px;
 }
 
+.error-close {
+  float: right;
+  margin-top: -10px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.error-close:hover {
+  color: gray;
+}
+
 .container {
   display: flex;
   justify-content: space-between;
@@ -154,12 +165,13 @@ p.condition span {
   display: inline;
   line-height: normal;
   vertical-align: middle;
+
 }
 
 p.high-temp {
   font-size: 40px;
   font-weight: bold;
-  margin: 0 auto;
+  margin: -15px auto;
   text-align: left;
   width: 75%;
 }
@@ -169,8 +181,8 @@ p.low-temp {
   color: #78d5fc;
   font-size: 40px;
   font-weight: bold;
-  margin: 0 auto;
-  padding-bottom: 10px;
+  margin: -15px auto;
+  padding-bottom: 20px;
   text-align: right;
   width: 75%;
 }

@@ -9,12 +9,12 @@
       <div id="weatherForm">
         <h4>
           Enter zipcode to see forecast:
-          <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())" maxlength="5"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
-
+          <input type="text" v-model="zipcode" placeholder="Zipcode" v-on:keyup.enter="tooFast(Date.now())" maxlength="5" v-on:keypress="isNumber($event)"> <button v-on:click='tooFast(Date.now())' class="btn btn-primary">Submit</button>
         </h4>
       </div>
 
       <ul v-if="errors.length > 0 " class="thumbnail errors">
+        <p class='error-close' v-on:click="errors = []">x</p>
         <li v-for="error in errors">- {{error}}</li>
       </ul>
 
@@ -42,10 +42,8 @@
                 </div>
 
                 <div class="day-info">
-                  <p class="condition">
-                    <span class="small" v-if="day.conditions.length > 15">{{day.conditions}}</span>
-                    <span v-else>{{day.conditions}}</span>
-                  </p>
+                  <p class="condition">{{day.conditions}}</p>
+
 
                   <div v-if="celsius == true">
                     <p class="high-temp">
@@ -56,6 +54,7 @@
                       <span>{{day.low.celsius}}°C</span>
                     </p>
                   </div>
+
                   <div v-else>
                     <p class="high-temp">
                       <span>{{day.high.fahrenheit}}°F</span>
