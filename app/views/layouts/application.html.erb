@@ -9,8 +9,29 @@
   </head>
 
   <body>
+    <div class="header">
+      <h1>Weather Rep<span id='sun'>☀</span>rt</h1>
+    </div>
+
     <div class="content">
       <%= yield %>
+    </div>
+
+    <div class="footer">
+      <div class='row footer-content'>
+        <div id='wunder-content' class="col-xs-4">
+          <p>Weather provided to you by</p>
+          <a href="https://www.wunderground.com/" target="_blank"><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt=""></a>
+        </div>
+        <div id='bateson-content' class='col-xs-4'>
+          <p>Made by Christopher Bateson</p>
+          <a href="wunderground.png" target="_blank"><img src="/assets/bateson-round.jpg" alt=""></a>
+        </div>
+      </div>
+
+      <div id='copyright'>
+        <p>©Copyright 2017. All Rights Reserved</p>
+      </div>
     </div>
   </body>
 </html>
